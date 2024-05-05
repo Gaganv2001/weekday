@@ -8,11 +8,20 @@
 
 .searchJobs p {
   font-size: 20px;
-  padding:0px 15px
+  padding: 0px 15px;
 }
 
-
 .chipLabel {
-    text-decoration: none; /* Remove underline */
-    font-weight: 100;
-  }
+  text-decoration: none; /* Remove underline */
+  font-weight: 100;
+}
+
+.filtersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filterContainer {
+  margin: 10px; /* Adjust margin between filters */
+}
