@@ -27,7 +27,9 @@ const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
 
   return (
     <div>
-      {areValuesSelected && <p>{placeholder}</p>}
+      {areValuesSelected && (
+        <p style={{ margin: 2, textAlign: "left" }}>{placeholder}</p>
+      )}
       <Autocomplete
         popupIcon={
           <div
@@ -56,10 +58,15 @@ const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
           <TextField
             {...params}
             placeholder={areValuesSelected ? "" : placeholder}
+            size="small"
           />
         )}
         sx={{
           minWidth: width,
+          [`& .${autocompleteClasses.input}`]: {
+            height: 30, // Set your desired height here
+          },
+
           [`& .${autocompleteClasses.popupIndicator}`]: {
             transform: "none",
           },
@@ -73,7 +80,7 @@ const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
               style={{
                 backgroundColor: "#E6E6E6",
                 color: "black",
-                marginRight: 5,
+
                 borderRadius: 4,
               }}
               classes={{ label: "chipLabel" }}
