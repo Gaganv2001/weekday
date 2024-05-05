@@ -1,0 +1,12 @@
+/* style.css */
+.searchJobs {
+  border-width: 1px;
+  display: inline-block;
+  line-height: 2px;
+  border-bottom: 1px solid blue; /* Specify the style and color */
+}
+
+.searchJobs p {
+  font-size: 20px;
+  padding:0px 15px
+}
