@@ -16,16 +16,15 @@ const Jobs = () => {
   const elementRef = useRef(null); // Ref to the Intersection Observer instance
 
   useEffect(() => {
-    // Fetch initial data
     dispatch(fetchJobs({ limit: pagination.limit, offset: pagination.offset }));
-  }, [dispatch]);
+  }, []);
 
   function onIntersection(entries) {
     const firstEntry = entries[0];
     if (firstEntry.isIntersecting) {
       dispatch(
         fetchJobs({
-          limit: pagination.limit * 2,
+          limit: pagination.limit,
           offset: pagination.offset + pagination.limit,
         })
       );
@@ -45,7 +44,7 @@ const Jobs = () => {
     };
   }, [data]);
 
-  // Make sure to include myRef in the dependency array
+
 
   if (isLoading && !data.length) {
     return <h1>Loading...</h1>;
@@ -76,7 +75,7 @@ const Jobs = () => {
       </div>
       <div className="jobContainer">
         {data.map((job, index) => (
-          <JobCard key={index} job={job}/>
+          <JobCard key={index} job={job} />
         ))}
       </div>
       <div ref={elementRef}>Loading</div>
