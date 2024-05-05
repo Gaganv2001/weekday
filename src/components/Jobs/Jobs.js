@@ -8,7 +8,7 @@ import { fetchJobs } from "../../redux/slicer/jobSlice";
 
 const Jobs = () => {
   const dispatch = useDispatch();
-  const { data, isLoading, isError, pagination } = useSelector(
+  const { data, isLoading, isError, pagination, totalCount } = useSelector(
     (state) => state.job
   );
 
@@ -16,12 +16,16 @@ const Jobs = () => {
   const elementRef = useRef(null); // Ref to the Intersection Observer instance
 
   useEffect(() => {
-    dispatch(fetchJobs({ limit: pagination.limit, offset: pagination.offset }));
+    if (pagination.offset < totalCount || totalCount === 0) {
+      dispatch(
+        fetchJobs({ limit: pagination.limit, offset: pagination.offset })
+      );
+    }
   }, []);
 
   function onIntersection(entries) {
     const firstEntry = entries[0];
-    if (firstEntry.isIntersecting) {
+    if (firstEntry.isIntersecting && pagination.offset < totalCount) {
       dispatch(
         fetchJobs({
           limit: pagination.limit,
@@ -43,8 +47,6 @@ const Jobs = () => {
       }
     };
   }, [data]);
-
-
 
   if (isLoading && !data.length) {
     return <h1>Loading...</h1>;
@@ -69,18 +71,24 @@ const Jobs = () => {
               multi={filter.multi}
               categorized={filter.categorized}
               width={filter.width}
+              filterKey={filter.filterKey}
             />
           </div>
         ))}
       </div>
-      <div className="jobContainer">
-        {data.map((job, index) => (
-          <JobCard key={index} job={job} />
-        ))}
-      </div>
-      <div ref={elementRef}>Loading</div>
+      {data.length === 0 ? (
+        <div>No jobs available</div>
+      ) : (
+        <div className="jobContainer">
+          {data.map((job, index) => (
+            <JobCard key={index} job={job} />
+          ))}
+        </div>
+      )}
+      {pagination.offset < totalCount && ( // Only render the bottom loading if there are more jobs to fetch
+        <div ref={elementRef}>Loading</div>
+      )}
     </div>
   );
 };
-
 export default Jobs;

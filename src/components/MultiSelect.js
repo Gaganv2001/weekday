@@ -4,8 +4,18 @@ import TextField from "@mui/material/TextField";
 import { IoCloseSharp } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import Autocomplete, { autocompleteClasses } from "@mui/material/Autocomplete";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSelectedFilters } from "../redux/slicer/jobSlice";
 
-const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
+const MultiSelect = ({
+  data,
+  multi,
+  categorized,
+  placeholder,
+  width,
+  filterKey,
+}) => {
+  const dispatch = useDispatch();
   const [selectedValues, setSelectedValues] = useState(multi ? [] : null);
 
   let options;
@@ -24,6 +34,7 @@ const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
   const areValuesSelected = multi
     ? selectedValues.length > 0
     : selectedValues !== null;
+
 
   return (
     <div>
@@ -52,7 +63,32 @@ const MultiSelect = ({ data, multi, categorized, placeholder, width }) => {
         getOptionLabel={(option) => option.title}
         value={selectedValues}
         onChange={(event, newValue) => {
-          setSelectedValues(newValue);
+          // Check if newValue is truthy before processing
+          if (newValue) {
+            // Check if the Autocomplete is multi-select
+            if (multi) {
+              // For multi-select Autocomplete, newValue will always be an array
+              const selectedValues = newValue.map((option) => option.value);
+              setSelectedValues(newValue);
+              // Call the updateSelectedFilters action with the extracted selected values
+              dispatch(
+                updateSelectedFilters({ filterKey: filterKey, selectedValues })
+              );
+            } else {
+              // For single-select Autocomplete, newValue can be a single value or null
+              setSelectedValues(newValue);
+              // Call the updateSelectedFilters action with the selected value
+              dispatch(
+                updateSelectedFilters({
+                  filterKey: filterKey,
+                  selectedValues: newValue.value,
+                })
+              );
+            }
+          } else {
+            // Handle the case when no value is selected
+            setSelectedValues(multi ? [] : null);
+          }
         }}
         renderInput={(params) => (
           <TextField

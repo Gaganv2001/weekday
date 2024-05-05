@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-//Action
+// Action
 export const fetchJobs = createAsyncThunk(
   "fetchJobs",
   async ({ limit, offset }, thunkAPI) => {
@@ -32,6 +32,53 @@ export const fetchJobs = createAsyncThunk(
   }
 );
 
+// Function to filter jobs based on selected filters
+const filterJobs = (jobs, selectedFilters) => {
+  return jobs.filter((job) => {
+    // Check if each filter matches the job
+    for (const filterKey in selectedFilters) {
+      const filterValue = selectedFilters[filterKey];
+      // Skip if filter value is null or empty array
+      if (
+        !filterValue ||
+        (Array.isArray(filterValue) && filterValue.length === 0)
+      ) {
+        continue;
+      }
+      // Special handling for arrays (e.g., jobRole, location, techStack)
+      if (Array.isArray(filterValue)) {
+        if (!filterValue.includes(job[filterKey])) {
+          return false; // Job does not match the filter
+        }
+      } else {
+        // Special handling for location filter
+        if (filterKey === "location") {
+          // Check if inOffice filter is selected
+          if (selectedFilters["location"].includes("inOffice")) {
+            // Allow jobs in specific locations (e.g., bangalore, mumbai) when inOffice filter is selected
+            if (!["remote"].includes(job["location"].toLowerCase())) {
+              return true; // Show jobs in specific locations other than remote
+            } else {
+              return false; // Skip remote jobs
+            }
+          } else {
+            // Regular handling for location filter
+            if (filterValue === "remote" && job[filterKey] !== "remote") {
+              return false; // Show only remote jobs
+            }
+          }
+        } else {
+          // Single value filter (e.g., minExp, minJdSalary)
+          if (job[filterKey] !== filterValue) {
+            return false; // Job does not match the filter
+          }
+        }
+      }
+    }
+    return true; // All filters match the job
+  });
+};
+
 const jobSlice = createSlice({
   name: "job",
   initialState: {
@@ -43,7 +90,15 @@ const jobSlice = createSlice({
       limit: 12,
       offset: 0,
     },
-    // Flag to track initial data loading
+    selectedFilters: {}, // Object to store selected filters
+  },
+  reducers: {
+    updateSelectedFilters(state, action) {
+      const { filterKey, selectedValues } = action.payload;
+      state.selectedFilters[filterKey] = selectedValues;
+      // Filter jobs based on selected filters
+      state.data = filterJobs(state.data, state.selectedFilters);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchJobs.pending, (state, action) => {
@@ -54,6 +109,8 @@ const jobSlice = createSlice({
       state.data = [...state.data, ...action.payload.jdList];
       state.totalCount = action.payload.totalCount;
       state.pagination.offset += state.pagination.limit;
+      // Filter jobs based on selected filters
+      state.data = filterJobs(state.data, state.selectedFilters);
     });
 
     builder.addCase(fetchJobs.rejected, (state, action) => {
@@ -64,4 +121,5 @@ const jobSlice = createSlice({
   },
 });
 
+export const { updateSelectedFilters } = jobSlice.actions;
 export default jobSlice.reducer;

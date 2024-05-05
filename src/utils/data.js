@@ -61,8 +61,9 @@ const filtersData = [
     ],
     placeholder: "Roles",
     multi: true,
-    categorized:true,
-    width:200
+    categorized: true,
+    width: 200,
+    filterKey: "jobRole",
   },
   {
     menuItems: [
@@ -93,9 +94,9 @@ const filtersData = [
     ],
     placeholder: "Number of Employees",
     multi: true,
-    categorized:false,
-    width:250,
-
+    categorized: false,
+    width: 250,
+    filterKey: "employees",
   },
   {
     menuItems: [
@@ -112,10 +113,9 @@ const filtersData = [
     ],
     placeholder: "Experience",
     multi: false,
-    categorized:false,
-    width:150,
-
-
+    categorized: false,
+    width: 150,
+    filterKey: "minExp",
   },
   {
     menuItems: [
@@ -134,10 +134,9 @@ const filtersData = [
     ],
     placeholder: "Remote",
     multi: true,
-    categorized:false,
-    width:130,
-
-
+    categorized: false,
+    width: 130,
+    filterKey: "location",
   },
   {
     menuItems: [
@@ -156,28 +155,26 @@ const filtersData = [
     ],
     placeholder: "Tech Stack",
     multi: true,
-    categorized:false,
-    width:150,
-
-
+    categorized: false,
+    width: 150,
+    filterKey: "techStack",
   },
   {
     menuItems: [
       { title: "0L", value: "0" },
-      { title: "10L", value: "10" },
-      { title: "20L", value: "20" },
-      { title: "30L", value: "30" },
-      { title: "40L", value: "40" },
-      { title: "50L", value: "50" },
-      { title: "60L", value: "60" },
-      { title: "70L", value: "70" },
+      { title: "10L", value: 10 },
+      { title: "20L", value: 20 },
+      { title: "30L", value: 30 },
+      { title: "40L", value: 40 },
+      { title: "50L", value: 50 },
+      { title: "60L", value: 60 },
+      { title: "70L", value: 70 },
     ],
     placeholder: "Min Base Pay",
     multi: false,
-    categorized:false,
-    width:250,
-
-
+    categorized: false,
+    width: 250,
+    filterKey: "minJdSalary",
   },
 ];
 
