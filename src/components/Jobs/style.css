@@ -16,10 +16,20 @@
   font-weight: 100;
 }
 
+.jobContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin: 30px 50px;
+  justify-content: center;
+}
 .filtersContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  margin: 0px 50px;
+  justify-content: center;
 }
 
 .filterContainer {

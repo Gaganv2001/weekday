@@ -3,29 +3,68 @@ import React from "react";
 import "./style.css";
 import MultiSelect from "../MultiSelect";
 import filtersData from "../../utils/data";
+import JobCard from "../../JobsCard/JobCard";
 
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994, category: "Engineering" },
-  { title: "The Godfather", year: 1972, category: "Engineering" },
-  { title: "The Godfather: Part II", year: 1974, category: "Engineering" },
-  { title: "The Dark Knight", year: 2008, category: "Engineering" },
-
-  { title: "Schindler's List", year: 1993, category: "Engineering" },
-
-  { title: "The Good, the Bad and the Ugly", year: 1966, category: "Sales" },
-  { title: "Fight Club", year: 1999, category: "Sales" },
+const data = [
   {
-    title: "The Lord of the Rings: The Fellowship of the Ring",
-    year: 2001,
-    category: "Sales",
+    jdUid: "cfff5a67-053c-11ef-83d3-06301d0a7178-92230",
+    jdLink: "https://weekday.works",
+    jobDetailsFromCompany:
+      "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
+    maxJdSalary: 63,
+    minJdSalary: 35,
+    salaryCurrencyCode: "USD",
+    location: "delhi ncr",
+    minExp: 10,
+    maxExp: 14,
+    jobRole: "frontend",
+    companyName: "Qualcomm",
+    logoUrl: "https://logo.clearbit.com/qualcomm.com",
   },
-
-  { title: "Pulp Fiction", year: 1994, category: "Hr" },
-  { title: "12 Angry Men", year: 1957, category: "Sales" },
   {
-    title: "The Lord of the Rings: The Return of the King",
-    year: 2003,
-    category: "Engineering",
+    jdUid: "cfff5a73-053c-11ef-83d3-06301d0a7178-92232",
+    jdLink: "https://weekday.works",
+    jobDetailsFromCompany:
+      "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
+    maxJdSalary: 67,
+    minJdSalary: 41,
+    salaryCurrencyCode: "USD",
+    location: "mumbai",
+    minExp: 8,
+    maxExp: 12,
+    jobRole: "ios",
+    companyName: "Epson",
+    logoUrl: "https://logo.clearbit.com/epson.com",
+  },
+  {
+    jdUid: "cfff5a80-053c-11ef-83d3-06301d0a7178-92234",
+    jdLink: "https://weekday.works",
+    jobDetailsFromCompany:
+      "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
+    maxJdSalary: 103,
+    minJdSalary: 98,
+    salaryCurrencyCode: "USD",
+    location: "bangalore",
+    minExp: 8,
+    maxExp: 11,
+    jobRole: "backend",
+    companyName: "Alibaba",
+    logoUrl: "https://logo.clearbit.com/alibaba.com",
+  },
+  {
+    jdUid: "cfff5a8d-053c-11ef-83d3-06301d0a7178-92236",
+    jdLink: "https://weekday.works",
+    jobDetailsFromCompany:
+      "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
+    maxJdSalary: 86,
+    minJdSalary: 57,
+    salaryCurrencyCode: "USD",
+    location: "remote",
+    minExp: 5,
+    maxExp: 14,
+    jobRole: "android",
+    companyName: "Airbnb",
+    logoUrl: "https://logo.clearbit.com/airbnb.com",
   },
 ];
 
@@ -47,6 +86,11 @@ const Jobs = () => {
               width={filter.width}
             />
           </div>
+        ))}
+      </div>
+      <div className="jobContainer">
+        {data.map((job, index) => (
+          <JobCard key={index} job={job} />
         ))}
       </div>
     </div>
