@@ -1,0 +1,15 @@
+.header {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0px 0px 5px grey;
+}
+
+.chatContainer {
+  width: 30px;
+  height: 30px;
+  background-color: #55efc4;
+  border-radius: 50%; /* Use 50% to make it a circle */
+  padding: 6px;
+  transform: scaleX(-1); /* Flip horizontally */
+}
