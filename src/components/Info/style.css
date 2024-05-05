@@ -1,0 +1,15 @@
+.infoContainer {
+  background-color: #d9fed3;
+  margin: 0px 50px;
+  border-radius: 20px;
+  box-shadow: 0px 5px 5px -3px grey;
+}
+
+.info {
+  padding: 5px 0px;
+}
+
+span {
+  text-decoration: underline;
+  font-weight: bold;
+}
