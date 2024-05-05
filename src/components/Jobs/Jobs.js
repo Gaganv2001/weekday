@@ -12,42 +12,40 @@ const Jobs = () => {
     (state) => state.job
   );
 
-  const containerRef = useRef(null); // Ref to the container element
-  const observer = useRef(null); // Ref to the Intersection Observer instance
+  // Ref to the container element
+  const elementRef = useRef(null); // Ref to the Intersection Observer instance
 
   useEffect(() => {
     // Fetch initial data
     dispatch(fetchJobs({ limit: pagination.limit, offset: pagination.offset }));
   }, [dispatch]);
 
-  const handleIntersection = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !isLoading && data.length < pagination.total) {
-        // If the container is visible, not loading, and there's more data to fetch
-        dispatch(fetchJobs({ limit: pagination.limit, offset: data.length }));
-      }
-    });
-  };
+  function onIntersection(entries) {
+    const firstEntry = entries[0];
+    if (firstEntry.isIntersecting) {
+      dispatch(
+        fetchJobs({
+          limit: pagination.limit * 2,
+          offset: pagination.offset + pagination.limit,
+        })
+      );
+    }
+  }
 
   useEffect(() => {
-    if (containerRef.current) {
-      observer.current = new IntersectionObserver(handleIntersection, {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0, // When the container is fully visible
-      });
-
-      observer.current.observe(containerRef.current);
-
-      return () => {
-        if (observer.current) {
-          observer.current.disconnect();
-        }
-      };
+    const observer = new IntersectionObserver(onIntersection);
+    if (observer && elementRef.current) {
+      observer.observe(elementRef.current);
     }
-  }, [ handleIntersection]);
 
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [data]);
 
+  // Make sure to include myRef in the dependency array
 
   if (isLoading && !data.length) {
     return <h1>Loading...</h1>;
@@ -76,11 +74,12 @@ const Jobs = () => {
           </div>
         ))}
       </div>
-      <div className="jobContainer" ref={containerRef}>
+      <div className="jobContainer">
         {data.map((job, index) => (
-          <JobCard key={index} job={job} />
+          <JobCard key={index} job={job}/>
         ))}
       </div>
+      <div ref={elementRef}>Loading</div>
     </div>
   );
 };
