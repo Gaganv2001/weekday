@@ -35,7 +35,6 @@ const MultiSelect = ({
     ? selectedValues.length > 0
     : selectedValues !== null;
 
-
   return (
     <div>
       {areValuesSelected && (
@@ -88,6 +87,12 @@ const MultiSelect = ({
           } else {
             // Handle the case when no value is selected
             setSelectedValues(multi ? [] : null);
+            dispatch(
+              updateSelectedFilters({
+                filterKey: filterKey,
+                selectedValues: null,
+              })
+            );
           }
         }}
         renderInput={(params) => (

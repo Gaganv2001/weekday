@@ -48,13 +48,13 @@ const Jobs = () => {
     };
   }, [data]);
 
-  // if (isLoading && !data.length) {
-  //   return <h1>Loading...</h1>;
-  // }
+  if (isLoading && !data.length) {
+    return <h1>Loading...</h1>;
+  }
 
-  // if (isError) {
-  //   return <h1>Error fetching jobs</h1>;
-  // }
+  if (isError) {
+    return <h1>Error fetching jobs</h1>;
+  }
 
   return (
     <div className="jobsContainer">
@@ -77,11 +77,7 @@ const Jobs = () => {
         ))}
       </div>
       {data.length === 0 ? (
-        <div>
-          {isLoading && !isError && <h1>Loading...</h1>}
-          {isError && <h1>Error fetching jobs</h1>}
-          {(!isLoading || isError) && <div>No jobs available</div>}
-        </div>
+        <div>No jobs available</div>
       ) : (
         <div className="jobContainer">
           {data.map((job, index) => (

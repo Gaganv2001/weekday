@@ -19,7 +19,7 @@ const JobCard = ({ job }) => {
       </div>
       <div className="Salary">
         <p>
-          Estimated Salary: {job.salaryCurrencyCode} {job.minJdSalary || 0}K -{" "}
+          Estimated Salary: {job.salaryCurrencyCode} {job.minJdSalary}K -{" "}
           {job.maxJdSalary}K
         </p>
         <IoMdCheckbox color="green" />
