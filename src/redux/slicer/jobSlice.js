@@ -54,21 +54,24 @@ const filterJobs = (jobs, selectedFilters) => {
         // Special handling for location filter
         if (filterKey === "location") {
           // Check if inOffice filter is selected
-          if (selectedFilters["location"].includes("inOffice")) {
-            // Allow jobs in specific locations (e.g., bangalore, mumbai) when inOffice filter is selected
-            if (!["remote"].includes(job["location"].toLowerCase())) {
-              return true; // Show jobs in specific locations other than remote
-            } else {
-              return false; // Skip remote jobs
+          if (filterValue.includes("inOffice")) {
+            // Show jobs in specific locations other than remote
+            if (job["location"].toLowerCase() !== "remote") {
+              return true;
             }
           } else {
             // Regular handling for location filter
-            if (filterValue === "remote" && job[filterKey] !== "remote") {
-              return false; // Show only remote jobs
+            if (job[filterKey].toLowerCase() !== filterValue.toLowerCase()) {
+              return false; // Job does not match the filter
             }
           }
+        } else if (filterKey === "minJdSalary") {
+          // Special handling for minJdSalary filter
+          if (job[filterKey] < filterValue) {
+            return false; // Job does not match the filter
+          }
         } else {
-          // Single value filter (e.g., minExp, minJdSalary)
+          // Single value filter (e.g., minExp)
           if (job[filterKey] !== filterValue) {
             return false; // Job does not match the filter
           }
